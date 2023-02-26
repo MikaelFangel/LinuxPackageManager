@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env bash
 
 # Take input from user
 pkgname=$(gum input --prompt "Packagename > " --placeholder "Which package do you want to install? ")
@@ -9,7 +9,7 @@ pkgsource=$(gum choose --limit=1 "Source" "Package manager")
 pkgsource=${pkgsource:-"Package manager"}
 pkgsource=${pkgsource::1}
 
-#read -p "The URL for the package: " pkguri
+pkguri=$(gum input --prompt "Url > " --placeholder "The url for the package")
 
 # Check the permissions for /usr/local/src
 #usrpermbits=$(stat -c "%a" /usr/local/src)
