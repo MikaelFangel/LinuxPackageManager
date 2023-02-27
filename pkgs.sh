@@ -26,7 +26,11 @@ bname=$(basename $pkguri)
 
 # Don't download if the file doesn't exist
 if ! [ -f $srcdir/$bname ]; then
-    wget $pkguri -P $srcdir
+    wget -t 3 $pkguri -P $srcdir
+    if [ $? -ne 0 ]; then
+        echo "The installation was not sucessful... Download Failed"
+	exit 1
+    fi
 fi
 
 cd $srcdir
