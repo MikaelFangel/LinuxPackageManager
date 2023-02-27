@@ -36,8 +36,14 @@ if [ "$pkgsource" == "S" ]; then
     ./configure
     make
     checkinstall
+    installstatus=$?
 else
     dpkg --install $bname || apt-get --fix-broken install
+    installstatus=$?
 fi
 
-
+if [ $installstatus -eq 0 ]; then
+    echo "The installation was successful"
+else
+   echo "There was errors during the installation... Exited with $installstatus"
+fi
