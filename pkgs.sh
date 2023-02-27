@@ -17,8 +17,8 @@ pkguri=$(gum input --prompt "Url > " --placeholder "The url for the package")
 usrpermbits=$(stat -c "%a" $srcdir)
 
 
-if [ $usrpermbits -ne 734 ]; then
-    chmod 0733 $srcdir
+if [ $usrpermbits -ne 777 ]; then
+    chmod 0777 $srcdir
 fi
 
 bname=$(basename $pkguri)
@@ -38,8 +38,13 @@ if [ "$pkgsource" == "S" ]; then
     checkinstall
     installstatus=$?
 else
-    dpkg --install $bname || apt-get --fix-broken install
-    installstatus=$?
+    if [[ "$bname"  =~ .*".rpm" ]]; then
+        alien -ki $bname
+        installstatus=$?
+    else
+        dpkg --install $bname || apt-get --fix-broken install
+        installstatus=$?
+    fi
 fi
 
 if [ $installstatus -eq 0 ]; then
