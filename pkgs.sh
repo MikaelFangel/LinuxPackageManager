@@ -11,7 +11,7 @@ pkgsource=$(gum choose --limit=1 "Source" "Package manager")
 pkgsource=${pkgsource:-"Package manager"}
 pkgsource=${pkgsource::1}
 
-pkguri=$(gum input --prompt "Url > " --placeholder "The url for the package")
+pkguri=$(gum input --width=$(tput cols) --prompt "Url > " --placeholder "The url for the package")
 
 # Check the permissions for /usr/local/src
 usrpermbits=$(stat -c "%a" $srcdir)
